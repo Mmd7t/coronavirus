@@ -1,10 +1,6 @@
-import 'package:coronavirus/pages/settings/settings.dart';
-import 'package:coronavirus/providers/accent_color_provider.dart';
+import 'package:coronavirus/pages/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../constants.dart';
 
 class GlobalAppBar extends PreferredSize {
   final bool isHome;
@@ -18,7 +14,6 @@ class GlobalAppBar extends PreferredSize {
 
   @override
   Widget build(BuildContext context) {
-    var accentColor = Provider.of<AccentColorProvider>(context);
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0.0,
@@ -30,15 +25,15 @@ class GlobalAppBar extends PreferredSize {
             ),
       ),
       centerTitle: true,
-      leading: (isHome)
+      leading: (isHome == true)
           ? const SizedBox()
           : CupertinoNavigationBarBackButton(
-              color: colorsMap[accentColor.color]),
+              color: Theme.of(context).accentColor),
       actions: [
         (isSettings)
             ? const SizedBox()
             : IconButton(
-                color: colorsMap[accentColor.color],
+                color: Theme.of(context).accentColor,
                 icon: const Icon(Icons.settings),
                 onPressed: () {
                   Navigator.of(context).pushNamed(Settings.routeName);

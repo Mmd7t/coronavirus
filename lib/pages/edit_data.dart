@@ -3,7 +3,6 @@ import 'package:coronavirus/models/day_read.dart';
 import 'package:coronavirus/providers/theme_provider.dart';
 import 'package:coronavirus/widgets/global_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../constants.dart';
 
@@ -51,7 +50,7 @@ class _EditDataPageState extends State<EditDataPage> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context);
+    var themeController = ThemeController.of(context);
     switch (widget.dataRelatedTo) {
       case 0:
         setState(() {
@@ -133,7 +132,7 @@ class _EditDataPageState extends State<EditDataPage> {
                       trailing: Text(
                         '${selectedDate.year}/${selectedDate.month}/${selectedDate.day}',
                       ),
-                      tileColor: (theme.theme)
+                      tileColor: (themeController.currentTheme == 'dark')
                           ? const Color(0xFF131344)
                           : Colors.grey[300],
                       onTap: () async {

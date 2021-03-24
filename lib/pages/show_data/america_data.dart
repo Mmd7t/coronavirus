@@ -1,11 +1,9 @@
 import 'package:coronavirus/constants.dart';
 import 'package:coronavirus/db/db.dart';
 import 'package:coronavirus/models/day_read.dart';
-import 'package:coronavirus/providers/accent_color_provider.dart';
 import 'package:coronavirus/providers/theme_provider.dart';
 import 'package:coronavirus/widgets/global_appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../add_data.dart';
@@ -23,11 +21,9 @@ class _AmericaDataState extends State<AmericaData> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context);
-    var accentColor = Provider.of<AccentColorProvider>(context);
-
+    var themeController = ThemeController.of(context);
     if (notesList == null) {
-      notesList = List<DayRead>();
+      notesList = [];
       updateListView();
     }
     return Scaffold(
@@ -46,10 +42,10 @@ class _AmericaDataState extends State<AmericaData> {
                     margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      border: (theme.theme)
+                      border: (themeController.currentTheme == 'dark')
                           ? Border.fromBorderSide(BorderSide.none)
-                          : Border.all(color: colorsMap[accentColor.color]),
-                      color: (theme.theme)
+                          : Border.all(color: Theme.of(context).accentColor),
+                      color: (themeController.currentTheme == 'dark')
                           ? const Color(0xFF131344)
                           : Colors.white,
                     ),
@@ -65,7 +61,7 @@ class _AmericaDataState extends State<AmericaData> {
                                     .textTheme
                                     .subtitle1
                                     .copyWith(
-                                      color: colorsMap[accentColor.color],
+                                      color: Theme.of(context).accentColor,
                                       fontWeight: FontWeight.bold,
                                     ),
                               ),
@@ -133,7 +129,7 @@ class _AmericaDataState extends State<AmericaData> {
             }
           }),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: colorsMap[accentColor.color],
+        backgroundColor: Theme.of(context).accentColor,
         child: const Icon(Icons.add),
         onPressed: () async {
           bool result = await Navigator.of(context).push(MaterialPageRoute(

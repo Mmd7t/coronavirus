@@ -4,7 +4,6 @@ import 'package:coronavirus/models/day_read.dart';
 import 'package:coronavirus/providers/theme_provider.dart';
 import 'package:coronavirus/widgets/global_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AddDataPage extends StatefulWidget {
   static const String routeName = 'addDataPage';
@@ -32,7 +31,7 @@ class _AddDataPageState extends State<AddDataPage> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context);
+    var themeController = ThemeController.of(context);
     switch (widget.dataRelatedTo) {
       case 0:
         setState(() {
@@ -113,7 +112,7 @@ class _AddDataPageState extends State<AddDataPage> {
                       trailing: Text(
                         '${selectedDate.year}/${selectedDate.month}/${selectedDate.day}',
                       ),
-                      tileColor: (theme.theme)
+                      tileColor: (themeController.currentTheme == 'dark')
                           ? const Color(0xFF131344)
                           : Colors.grey[300],
                       onTap: () async {

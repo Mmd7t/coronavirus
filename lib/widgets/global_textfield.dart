@@ -1,6 +1,5 @@
 import 'package:coronavirus/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class GlobalTextFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -13,16 +12,20 @@ class GlobalTextFormField extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context);
+    var themeController = ThemeController.of(context);
     return TextFormField(
       controller: controller,
       keyboardType: TextInputType.number,
-      keyboardAppearance: (theme.theme) ? Brightness.dark : Brightness.light,
+      keyboardAppearance: (themeController.currentTheme == 'dark')
+          ? Brightness.dark
+          : Brightness.light,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         hintText: hintText,
         filled: true,
-        fillColor: (theme.theme) ? const Color(0xFF131344) : Colors.grey[300],
+        fillColor: (themeController.currentTheme == 'dark')
+            ? const Color(0xFF131344)
+            : Colors.grey[300],
       ),
       validator: (value) {
         if (value.isEmpty) {

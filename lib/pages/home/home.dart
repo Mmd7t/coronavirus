@@ -1,9 +1,6 @@
 import 'package:coronavirus/constants.dart';
-import 'package:coronavirus/providers/accent_color_provider.dart';
-import 'package:coronavirus/providers/theme_provider.dart';
 import 'package:coronavirus/widgets/global_appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'contain_box.dart';
 
@@ -28,9 +25,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var accentColor = Provider.of<AccentColorProvider>(context);
     return Scaffold(
       appBar: const GlobalAppBar(isHome: true),
+      // appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -57,8 +54,8 @@ class _HomePageState extends State<HomePage> {
             ),
             MaterialButton(
               child: const Text('Update Data'),
-              color: colorsMap[accentColor.color],
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+              color: Theme.of(context).accentColor,
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
               shape: const StadiumBorder(),
               onPressed: () {
                 setState(() {});

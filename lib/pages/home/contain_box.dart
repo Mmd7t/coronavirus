@@ -1,10 +1,7 @@
-import 'package:coronavirus/constants.dart';
 import 'package:coronavirus/db/db.dart';
 import 'package:coronavirus/models/day_read.dart';
-import 'package:coronavirus/providers/accent_color_provider.dart';
 import 'package:coronavirus/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../show_data/show_data.dart';
 
@@ -35,13 +32,11 @@ class _ContainBoxState extends State<ContainBox> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context);
-    var accentColor = Provider.of<AccentColorProvider>(context);
     final radius = BorderRadius.circular(20);
-
+    var themeController = ThemeController.of(context);
     return InkWell(
       borderRadius: radius,
-      splashColor: colorsMap[accentColor.color],
+      splashColor: Theme.of(context).accentColor,
       enableFeedback: true,
       onTap: () {
         Navigator.of(context)
@@ -58,10 +53,12 @@ class _ContainBoxState extends State<ContainBox> {
           height: MediaQuery.of(context).size.height * 0.3,
           decoration: BoxDecoration(
             borderRadius: radius,
-            border: (theme.theme)
+            border: (themeController.currentTheme == 'dark')
                 ? Border.fromBorderSide(BorderSide.none)
-                : Border.all(color: colorsMap[accentColor.color]),
-            color: (theme.theme) ? const Color(0xFF131344) : Colors.white,
+                : Border.all(color: Theme.of(context).accentColor),
+            color: (themeController.currentTheme == 'dark')
+                ? const Color(0xFF131344)
+                : Colors.white,
           ),
           child: LayoutBuilder(
             builder: (context, constraints) => Column(
@@ -77,7 +74,7 @@ class _ContainBoxState extends State<ContainBox> {
                 Text(
                   widget.countryName,
                   style: Theme.of(context).textTheme.headline6.copyWith(
-                        color: colorsMap[accentColor.color],
+                        color: Theme.of(context).accentColor,
                       ),
                 ),
                 FutureBuilder(
